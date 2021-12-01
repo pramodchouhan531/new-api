@@ -7,12 +7,11 @@ const client = axios.create({
 client.defaults.headers.common['Authorization'] = ' Bearer 7IYz5itR8qSsKznurjvt';
 
 export const requestquotes =(id) => async (dispatch) =>{
-    try{
-      const response = await client.get(`/movie/${id}/qoute`);
-      console.log(response.data.docs)
-      dispatch(getquotes(response.data.docs));
-    }
-    catch (err) {
+  try{
+    const response = await client.get(`/movie/${id}/qoute`);
+    dispatch(getquotes(response.data.docs));
+  }
+  catch (err) {
     console.log("request error",err);
   }
 }

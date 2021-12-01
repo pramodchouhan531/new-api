@@ -1,4 +1,4 @@
-import {GET_BOOKS,GET_CHARACTER,GET_MOVIE, GET_QUOTES}from "../actions/actiontype"
+import {GET_BOOKS,GET_CHARACTER,GET_MOVIE, GET_QUOTES, SET_CHARACTER_FILTER, SET_MOVIE_FILTER}from "../actions/actiontype"
 
 
 export const getbooks =(books)=>({
@@ -18,3 +18,11 @@ export const getmoves =(movie)=>({
     type:GET_QUOTES,
     quotes
  });
+ export const getcharacterfilter =(filter)=>({
+   type:SET_CHARACTER_FILTER,
+   filter
+});
+export const getmoviefilter =(filter)=>({
+   type:SET_MOVIE_FILTER,
+   filter
+});

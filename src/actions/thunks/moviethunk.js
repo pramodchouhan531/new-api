@@ -1,5 +1,5 @@
 import axios from 'axios';
-import { getmoves} from '../action';
+import { getmoves, getmoviefilter} from '../action';
 
 
 const client = axios.create({
@@ -8,10 +8,14 @@ const client = axios.create({
 
 client.defaults.headers.common['Authorization'] = ' Bearer 7IYz5itR8qSsKznurjvt';
 
-export const requestmovie =() => async (dispatch) =>{
+export const requestmovie =(prevFilters) => async (dispatch) =>{
     try{
-      const response = await client.get('/movie?sort=character:desc');
-      dispatch(getmoves(response.data.docs));
+      const params = {
+        limit: prevFilters.limit
+      };
+      const { data: { docs } }  = await client.get(`/movie/?budgetInMillions<${params.limit}`);
+      dispatch(getmoves({movie:docs}));
+      //dispatch(getmoviefilter(filter))
     }
     catch (err) {
     console.log("request error",err);

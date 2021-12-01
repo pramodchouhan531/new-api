@@ -1,18 +1,36 @@
-import { GET_MOVIE } from "../actions/actiontype";
+import { GET_MOVIE, SET_MOVIE_FILTER } from "../actions/actiontype";
 
 const initialstate={
-    movie:[]
+    records:{
+        movie:[],
+        filter:{
+          limit:100
+       }
 }
-
+}
 const moviereducer = (state = initialstate, action) => {
-    switch (action.type) {
-        case GET_MOVIE:
-            return {
-                ...state,
-                movie: action.movie,
-                loading: false
-            }
-        default: return state;
+  switch (action.type) {
+    case GET_MOVIE:
+      return { 
+        ...state,
+          records: {
+            ...state.records,
+            ...action.movie,
+            loading: false
+           }
+      }
+    case SET_MOVIE_FILTER:
+      return {
+        ...state,
+        records: {
+          ...state.records,
+          filter: {
+            ...state.records.filter,
+            ...action.filter,
+         }
+     }
     }
+     default: return state;
+ }
 };
 export default moviereducer;

@@ -1,6 +1,5 @@
 import axios from 'axios';
-import { getcharacter} from '../action';
-
+import { getcharacter, getcharacterfilter} from '../action';
 
 const client = axios.create({
     baseURL: 'https://the-one-api.dev/v2/',
@@ -8,12 +7,16 @@ const client = axios.create({
 
 client.defaults.headers.common['Authorization'] = ' Bearer 7IYz5itR8qSsKznurjvt';
 
-export const requestcharacter =() => async (dispatch) =>{
-    try{
-      const response = await client.get('/character?name=/foot/i');
-      dispatch(getcharacter(response.data.docs));
+export const requestcharacter =(prevFilters) => async (dispatch) =>{
+  try{
+    const params = {
+      limit: prevFilters.limit
+    };
+    const { data: { docs, ...filter } }  = await client.get('/character/',{ params });
+       dispatch(getcharacter({character:docs}));
+       dispatch(getcharacterfilter(filter));
     }
-    catch (err) {
+  catch (err) {
     console.log("request error",err);
   }
 }
